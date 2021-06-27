@@ -1,0 +1,37 @@
+import vendedores.*
+import lugares.*
+import certificaciones.*
+
+test "vendedores" {
+
+	const tandil = new Ciudad(provinciaEnLaQueEsta= "Buenos Aires")
+	const rafaela = new Ciudad(provinciaEnLaQueEsta= "Santa Fe")
+	const gualeyguaychu = new Ciudad(provinciaEnLaQueEsta= "Entre Rios")
+	const ushuaia = new Ciudad(provinciaEnLaQueEsta= "Tierra del Fuego")
+	const rioCuarto = new Ciudad(provinciaEnLaQueEsta= "Cordoba")
+	const posadas = new Ciudad(provinciaEnLaQueEsta= "Misiones")
+	const c1 = new Certificacion(esDeProducto=true, puntaje=13)
+	const c2 = new Certificacion(esDeProducto=true, puntaje=17)
+	const c3 = new Certificacion(esDeProducto=false, puntaje=9)
+	const c4 = new Certificacion(esDeProducto=false, puntaje=14)
+	const c5 = new Certificacion(esDeProducto=true, puntaje=20)
+	const misiones = new Provincia(nombre="Misiones", poblacion= 2)
+	const cordoba = new Provincia(nombre="Cordoba", poblacion= 7)
+	const entreRios = new Provincia (nombre="Entre Rios", poblacion= 3)
+	const fijo = new VendedorFijo(ciudadDondeVive= tandil, certificaciones=[c1, c3, c5])
+	const viajante = new Viajante(provinciasHabilitadas=[misiones, cordoba, entreRios], certificaciones=[c1, c2])
+	const comercioCorresponsal = new ComercioCorresponsal(ciudadesConSucursales=[rafaela, ushuaia, posadas], certificaciones=[c1, c4, c5 ,c2])
+	
+	assert.that(fijo.puedeTrabajar(tandil))
+	assert.that(viajante.puedeTrabajar(rioCuarto))
+	assert.that(comercioCorresponsal.puedeTrabajar(posadas))
+	assert.that(fijo.esVersatil())
+	assert.that(not viajante.esVersatil())
+	assert.that(comercioCorresponsal.esVersatil())
+	assert.that(fijo.esFirme())
+	assert.that(viajante.esFirme())
+	assert.that(comercioCorresponsal.esFirme())
+	assert.that(viajante.esInfluyente())
+	assert.that(comercioCorresponsal.esInfluyente())
+
+}
